@@ -1,25 +1,31 @@
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+void free_data(t_data *data, int n)
 {
-	int			i;
-	int			count;
-	long int	nbr;
+	int i;
 
-	i = 0;
-	count = 1;
-	nbr = 0;
-	while (str[i] == '\n' || str[i] == '\r' || str[i] == '\t'
-		   || str[i] == '\v' || str[i] == '\f' || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		count = -1;
-	if (str[i] == '+' || str[i] == '-')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
+	i = -1;
+	while (i++ < data->num_of_philo)
 	{
-		nbr = (str[i] - '0') + (nbr * 10);
-		i++;
+		free(data->philo[i]);
+		free(data->forks[i]);
+		pthread_mutex_destroy(data->forks[i]);
+		pthread_mutex_destroy(data->philo->death_mutex[i]);
 	}
-	return (nbr * count);
+	pthread_mutex_destroy(data->print_mutex);
+	free(data->philo);
+	free(data->forks);
+	free(data);
+	if (n == 1)
+		exit(1);
+	else
+		exit(0);
+}
+
+long long now(void)
+{
+	struct timeval time;
+
+	gettimeofday(time, NULL);
+	return ((time.tv_sec * 1000 + time.tv_usec / 1000);
 }

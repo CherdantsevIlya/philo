@@ -1,10 +1,6 @@
 #ifndef PHILO_H
 #define PHILO_H
 
-# define OK 0
-# define ERROR 1
-# define EXIT 1
-
 #include <unistd.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -12,46 +8,51 @@
 #include <sys/time.h>
 #include <string.h>
 
-typedef struct s_input
-{
-	int num_of_filo;
-	int time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
-	int num_of_meals;
-} 	t_input;
+typedef struct s_philo t_philo;
+typedef struct s_data t_data;
 
-typedef struct s_philo
+struct	s_philo
 {
-	int name;
-	pthread_mutex_t left_fork;
-	pthread_mutex_t right_fork;
-	pthread_mutex_t printf_mutex;
-}	t_philo;
+	t_data			*data;
+	int 			name;
+	int 			num_of_eat;
+	long long		start_eat_time;
+	pthread_t		th;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t *death_mutex;
+};
 
-typedef struct s_data
+struct	s_data
 {
-	pthread_t		*thread;
-	pthread_mutex_t	*forks;
 	t_philo			*philo;
-	t_input			*input;
-}	t_data;
+	int 			num_of_philo;
+	int 			time_to_die;
+	int 			time_to_eat;
+	int 			time_to_sleep;
+	int				num_of_must_eat;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
+	int 			death_flag;
+	int 			count_eat;
+	long long		start_time;
+};
 
-/*
- **		parsing.c
- */
+void threads(t_data *data, int argc);
+void *start_routine(void *thread);
+void *death_routine(void *thread);
+void *eat_routine();
 
-void rules(void);
-int is_num(char *str);
-int parsing(int argc, char **argv);
-
-/*
- **		parsing.c
- */
-
-int init(int argc, char **argv, t_data *data);
-int init_philos(t_data *data);
-int init_forks(t_data *data);
+int init_philo(t_data *data);
+int parsing(t_data *data, int argc, char **argv);
 int	ft_atoi(const char *str);
+
+void philo_takes_forks(t_philo *philo)
+void philo_eating(t_philo *philo);
+void philo_sleeping(t_philo *philo);
+void philo_thinking(t_philo *philo);
+
+void free_data(t_data *data, int n);
+long long now(void);
 
 #endif
