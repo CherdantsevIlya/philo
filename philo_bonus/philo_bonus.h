@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/29 17:26:24 by pkari             #+#    #+#             */
+/*   Updated: 2021/11/29 17:26:26 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
@@ -36,35 +48,35 @@ struct	s_data
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			num_of_must_eat;
-	sem_t 		*forks;
+	sem_t		*forks;
 	sem_t		*print;
 	sem_t		*death_flag;
 	sem_t		*count_eat;
 	long long	start_time;
 };
 
-void		threads(t_data *data, int argc);
-void		*start_routine(void *thread);
+int			processes(t_data *data);
+void		start_routine(t_philo *philo);
 void		*death_routine(void *thread);
 void		*eat_routine(void *thread);
+void		*end_routine(void *thread);
 
-int			init_philo(t_data *data); // отлично
-int			init_semaphore(t_data *data); // отлично
-int			parsing(t_data *data, int argc, char **argv); // отлично
-int			ft_atoi(const char *str); // отлчно
+int			init_philo(t_data *data);
+int			init_semaphore(t_data *data);
+int			parsing(t_data *data, int argc, char **argv);
+int			ft_atoi(const char *str);
 
-void		philo_takes_forks(t_philo *philo); // отлично
-void		philo_eating(t_philo *philo); // думаю, что отлично, но если и
-// нет, то траблы явно с 27ой строкой
-void		philo_sleeping(t_philo *philo); // отлично
-void		philo_thinking(t_philo *philo); // отлично
+void		philo_takes_forks(t_philo *philo);
+void		philo_eating(t_philo *philo);
+void		philo_sleeping(t_philo *philo);
+void		philo_thinking(t_philo *philo);
 
-void		free_data(t_data *data, int n); // НЕТ!
-void		philo_time_to(int time); // отлично
-long long	now(void); // отлично
+void		free_data(t_data *data, int n, int m);
+void		philo_time_to(int time);
+long long	now(void);
 
-char		*ft_strjoin(char *s1, char *s2); // отлично
-char		*ft_itoa(int n); // отлично
-size_t		ft_strlen(const char *s); // отлично
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_itoa(int n);
+size_t		ft_strlen(const char *s);
 
 #endif

@@ -1,26 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/29 17:25:07 by pkari             #+#    #+#             */
+/*   Updated: 2021/11/29 17:25:09 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
-void	free_data(t_data *data, int n)
+void	free_data(t_data *data, int n, int m)
 {
 	int	i;
+	int	status;
 
-	if (data->forks)
-	{
-		i = 0;
-		while (i < data->num_of_philo)
-			pthread_mutex_destroy(&data->forks[i++]);
-		free(data->forks);
-	}
+	i = 0;
 	if (data->philo)
 	{
-		i = 0;
 		while (i < data->num_of_philo)
-			pthread_mutex_destroy(&data->philo[i++].death_mutex);
-		free(data->philo);
+		{
+			if (n == 1)
+				waitpid(data->philo[i].pid, &status, 0);
+			sem_close(data->philo[i].death);
+			free(data->philo[i].sem_name);
+			i++;
+		}
 	}
-	pthread_mutex_destroy(&data->print_mutex);
+	free(data->philo);
+	sem_close(data->forks);
+	sem_close(data->death_flag);
+	sem_close(data->print);
+	sem_close(data->count_eat);
 	free(data);
-	if (n == 1)
+	if (m == 1)
 		exit(1);
 	else
 		exit(0);

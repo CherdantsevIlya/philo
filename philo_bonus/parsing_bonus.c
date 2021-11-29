@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/29 17:22:45 by pkari             #+#    #+#             */
+/*   Updated: 2021/11/29 17:22:49 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 int	ft_atoi(const char *str)
@@ -55,21 +67,21 @@ int	parsing(t_data *data, int argc, char **argv)
 int	init_semaphore(t_data *data)
 {
 	sem_unlink("/forks");
-	data->forks = sem_open("/forks", O_CREAT | O_EXCL, data->num_of_philo);
+	data->forks = sem_open("/forks", O_CREAT, S_IRWXU, data->num_of_philo);
 	if (data->forks == SEM_FAILED)
-		return (printf("Error: invalid semaphore init\n"));
+		return (printf("Error: invalid semaphore init (forks)\n"));
 	sem_unlink("/print");
-	data->print = sem_open("/print", O_CREAT | O_EXCL, 1);
+	data->print = sem_open("/print", O_CREAT, S_IRWXU, 1);
 	if (data->print == SEM_FAILED)
-		return (printf("Error: invalid semaphore init\n"));
+		return (printf("Error: invalid semaphore init (print)\n"));
 	sem_unlink("/death_flag");
-	data->death_flag = sem_open("/death_flag", O_CREAT | O_EXCL, 0);
+	data->death_flag = sem_open("/death_flag", O_CREAT, S_IRWXU, 0);
 	if (data->death_flag == SEM_FAILED)
-		return (printf("Error: invalid semaphore init\n"));
+		return (printf("Error: invalid semaphore init (death_flag)\n"));
 	sem_unlink("/count_eat");
-	data->count_eat = sem_open("/count_eat", O_CREAT | O_EXCL, 0);
+	data->count_eat = sem_open("/count_eat", O_CREAT, S_IRWXU, 0);
 	if (data->count_eat == SEM_FAILED)
-		return (printf("Error: invalid semaphore init\n"));
+		return (printf("Error: invalid semaphore init (count_eat)\n"));
 	return (0);
 }
 
@@ -88,10 +100,10 @@ int	init_philo(t_data *data)
 	while (i < data->num_of_philo)
 	{
 		data->philo[i].name = i;
-		data->philo[i].sem_name = ft_strjoin("/death", ft_itoa(i + 1));
-		sem_unlink(data->philo[i].sem_name);
-		data->philo[i].death = sem_open(data->philo[i].sem_name, O_CREAT
-				| O_EXCL, 1);
+		data->philo[i].sem_name = ft_strjoin("sem", ft_itoa(i + 1));
+		sem_unlink((const char *)data->philo[i].sem_name);
+		data->philo[i].death = sem_open((const char *)data->philo[i].sem_name,
+				O_CREAT, S_IRWXU, 1);
 		if (data->philo[i].death == SEM_FAILED)
 			return (printf("Error: invalid semaphore init\n"));
 		data->philo[i].data = data;
