@@ -13,12 +13,12 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <string.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <string.h>
 
 typedef struct s_philo	t_philo;
 typedef struct s_data	t_data;
