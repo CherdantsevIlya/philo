@@ -16,7 +16,7 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS) $(HEADER)
-			@$(CC) $(OBJS) -I. -o $(NAME) -lpthread
+			@$(CC) $(OBJS) -I. -o $(NAME) -pthread
 			@printf "\x1b[1m\x1b[35m 🍝 philo is ready 🍜 \x1b[22m\n"
 
 %.o		:	%.c $(HEADER)
