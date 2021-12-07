@@ -12,21 +12,17 @@
 
 #include "philo_bonus.h"
 
-void	free_data(t_data *data, int n, int m)
+void	free_data(t_data *data, int n)
 {
 	int	i;
-	int	status;
 
-	i = 0;
+	i = -1;
 	if (data->philo)
 	{
-		while (i < data->num_of_philo)
+		while (++i < data->num_of_philo)
 		{
-			if (n == 1)
-				waitpid(data->philo[i].pid, &status, 0);
 			sem_close(data->philo[i].death);
 			free(data->philo[i].sem_name);
-			i++;
 		}
 	}
 	free(data->philo);
@@ -35,10 +31,9 @@ void	free_data(t_data *data, int n, int m)
 	sem_close(data->print);
 	sem_close(data->count_eat);
 	free(data);
-	if (m == 1)
+	if (n == 1)
 		exit(1);
-	else
-		exit(0);
+	exit(0);
 }
 
 long long	now(void)

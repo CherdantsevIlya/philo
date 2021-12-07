@@ -48,6 +48,7 @@ void	*death_routine(void *thread)
 {
 	t_philo	*philo;
 
+	pthread_detach(thread);
 	philo = thread;
 	while (1)
 	{
@@ -74,13 +75,24 @@ void	start_routine(t_philo *philo)
 	philo->start_eat_time = now();
 	if (((philo->name) % 2) != 0)
 		usleep(philo->data->time_to_eat * 500);
-	while (1)
+	if (philo->data->num_of_philo != 1)
 	{
-		philo_takes_forks(philo);
-		philo_eating(philo);
-		philo_sleeping(philo);
-		philo_thinking(philo);
+		while (1)
+		{
+			philo_takes_forks(philo);
+			philo_eating(philo);
+			philo_sleeping(philo);
+			philo_thinking(philo);
+		}
 	}
+	else
+	{
+		sem_wait(philo->data->forks);
+		printf("%lld\t%d\thas taken a fork\n", now() - philo->data->start_time,
+			   philo->name + 1);
+		usleep(philo->data->time_to_die * 1000);
+	}
+	exit(0);
 }
 
 int	processes(t_data *data)

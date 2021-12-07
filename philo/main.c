@@ -57,12 +57,23 @@ void	*start_routine(void *thread)
 	philo->start_eat_time = now();
 	if (((philo->name) % 2) != 0)
 		usleep(philo->data->time_to_eat * 500);
-	while (!philo->data->death_flag)
+	if (philo->data->num_of_philo != 1)
 	{
-		philo_takes_forks(philo);
-		philo_eating(philo);
-		philo_sleeping(philo);
-		philo_thinking(philo);
+		while (!philo->data->death_flag)
+		{
+			philo_takes_forks(philo);
+			philo_eating(philo);
+			philo_sleeping(philo);
+			philo_thinking(philo);
+		}
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		if (!philo->data->death_flag)
+			printf("%lld\t%d\thas taken a fork\n",
+				   now() - philo->data->start_time, philo->name + 1);
+		usleep(philo->data->time_to_die * 1000);
 	}
 	return (NULL);
 }
@@ -72,7 +83,6 @@ void	threads(t_data *data, int argc)
 	int			i;
 	pthread_t	*thread;
 	pthread_t	*death;
-	pthread_t	eat;
 
 	i = -1;
 	thread = (pthread_t *)malloc(sizeof(pthread_t) * data->num_of_philo);
@@ -80,19 +90,20 @@ void	threads(t_data *data, int argc)
 	data->start_time = now();
 	while (++i < data->num_of_philo)
 		pthread_create(&thread[i], NULL, start_routine, &data->philo[i]);
-	i = -1;
 	usleep(1000);
+	i = -1;
 	while (++i < data->num_of_philo)
 		pthread_create(&death[i], NULL, death_routine, &data->philo[i]);
 	if (argc == 6)
-		pthread_create(&eat, NULL, eat_routine, data);
+		twenty_five_lines(data);
 	i = -1;
 	while (++i < data->num_of_philo)
 	{
 		pthread_join(thread[i], NULL);
 		pthread_join(death[i], NULL);
-		pthread_join(eat, NULL);
 	}
+	free(thread);
+	free(death);
 }
 
 int	main(int argc, char **argv)

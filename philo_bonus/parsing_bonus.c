@@ -100,7 +100,7 @@ int	init_philo(t_data *data)
 	while (i < data->num_of_philo)
 	{
 		data->philo[i].name = i;
-		data->philo[i].sem_name = ft_strjoin("sem", ft_itoa(i + 1));
+		data->philo[i].sem_name = ft_itoa(i + 1);
 		sem_unlink((const char *)data->philo[i].sem_name);
 		data->philo[i].death = sem_open((const char *)data->philo[i].sem_name,
 				O_CREAT, S_IRWXU, 1);

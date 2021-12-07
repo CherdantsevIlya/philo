@@ -58,3 +58,11 @@ void	philo_time_to(int time)
 			usleep(100);
 	}
 }
+
+void	twenty_five_lines(t_data *data)
+{
+	pthread_t	eat;
+
+	pthread_create(&eat, NULL, eat_routine, data);
+	pthread_detach(eat);
+}

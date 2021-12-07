@@ -71,12 +71,10 @@ void		philo_eating(t_philo *philo);
 void		philo_sleeping(t_philo *philo);
 void		philo_thinking(t_philo *philo);
 
-void		free_data(t_data *data, int n, int m);
+void		free_data(t_data *data, int n);
 void		philo_time_to(int time);
 long long	now(void);
 
-char		*ft_strjoin(char *s1, char *s2);
 char		*ft_itoa(int n);
-size_t		ft_strlen(const char *s);
 
 #endif

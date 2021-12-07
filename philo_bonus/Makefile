@@ -12,7 +12,7 @@ OBJS	=	$(SRCS:.c=.o)
 HEADER	=	philo_bonus.h
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 RM		=	rm -f
 
 all		:	$(NAME)

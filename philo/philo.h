@@ -67,5 +67,6 @@ void		philo_thinking(t_philo *philo);
 int			free_data(t_data *data, int n);
 void		philo_time_to(int time);
 long long	now(void);
+void		twenty_five_lines(t_data *data);
 
 #endif

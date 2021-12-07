@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	t_data		*data;
 	pthread_t	eat;
 	pthread_t	end;
+	int			status;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
@@ -27,11 +28,12 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (init_philo(data))
-		free_data(data, 0, 1);
+		free_data(data, 1);
 	if (processes(data))
-		free_data(data, 1, 1);
+		free_data(data, 1);
 	if (argc == 6)
 		pthread_create(&eat, NULL, eat_routine, data);
 	pthread_create(&end, NULL, end_routine, data);
-	free_data(data, 1, 0);
+	waitpid(-1, &status, WUNTRACED);
+	free_data(data, 0);
 }
