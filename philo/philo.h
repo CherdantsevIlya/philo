@@ -36,6 +36,8 @@ struct	s_philo
 
 struct	s_data
 {
+	pthread_t		*thread;
+	pthread_t		*death;
 	t_philo			*philo;
 	int				num_of_philo;
 	int				time_to_die;
@@ -49,7 +51,7 @@ struct	s_data
 	long long		start_time;
 };
 
-void		threads(t_data *data, int argc);
+int			threads(t_data *data, int argc);
 void		*start_routine(void *thread);
 void		*death_routine(void *thread);
 void		*eat_routine(void *thread);
@@ -67,6 +69,7 @@ void		philo_thinking(t_philo *philo);
 int			free_data(t_data *data, int n);
 void		philo_time_to(int time);
 long long	now(void);
-void		twenty_five_lines(t_data *data);
+void		twenty_five_lines(t_data *data, pthread_t *thread, pthread_t
+				*death, int argc);
 
 #endif

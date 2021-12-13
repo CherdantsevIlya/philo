@@ -59,10 +59,21 @@ void	philo_time_to(int time)
 	}
 }
 
-void	twenty_five_lines(t_data *data)
+void	twenty_five_lines(t_data *data, pthread_t *thread, pthread_t *death,
+						  int argc)
 {
+	int			i;
 	pthread_t	eat;
 
-	pthread_create(&eat, NULL, eat_routine, data);
-	pthread_detach(eat);
+	if (argc == 6)
+	{
+		pthread_create(&eat, NULL, eat_routine, data);
+		pthread_detach(eat);
+	}
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		pthread_join(thread[i], NULL);
+		pthread_join(death[i], NULL);
+	}
 }

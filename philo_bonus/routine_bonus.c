@@ -18,6 +18,7 @@ void	*end_routine(void *thread)
 	t_data	*data;
 
 	i = 0;
+	pthread_detach(thread);
 	data = thread;
 	sem_wait(data->death_flag);
 	while (i < data->num_of_philo)
@@ -34,6 +35,7 @@ void	*eat_routine(void *thread)
 	t_data	*data;
 
 	i = 0;
+	pthread_detach(thread);
 	data = thread;
 	while (i < data->num_of_philo)
 	{
@@ -64,7 +66,6 @@ void	*death_routine(void *thread)
 		sem_post(philo->data->print);
 		sem_post(philo->death);
 	}
-	return (NULL);
 }
 
 void	start_routine(t_philo *philo)
@@ -92,7 +93,7 @@ void	start_routine(t_philo *philo)
 			   philo->name + 1);
 		usleep(philo->data->time_to_die * 1000);
 	}
-	exit(0);
+	exit(1);
 }
 
 int	processes(t_data *data)

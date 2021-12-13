@@ -78,7 +78,7 @@ void	*start_routine(void *thread)
 	return (NULL);
 }
 
-void	threads(t_data *data, int argc)
+int	threads(t_data *data, int argc)
 {
 	int			i;
 	pthread_t	*thread;
@@ -87,6 +87,8 @@ void	threads(t_data *data, int argc)
 	i = -1;
 	thread = (pthread_t *)malloc(sizeof(pthread_t) * data->num_of_philo);
 	death = (pthread_t *)malloc(sizeof(pthread_t) * data->num_of_philo);
+	if (!thread || !death)
+		return (printf("Error: failed to allocate memory\n"));
 	data->start_time = now();
 	while (++i < data->num_of_philo)
 		pthread_create(&thread[i], NULL, start_routine, &data->philo[i]);
@@ -94,16 +96,10 @@ void	threads(t_data *data, int argc)
 	i = -1;
 	while (++i < data->num_of_philo)
 		pthread_create(&death[i], NULL, death_routine, &data->philo[i]);
-	if (argc == 6)
-		twenty_five_lines(data);
-	i = -1;
-	while (++i < data->num_of_philo)
-	{
-		pthread_join(thread[i], NULL);
-		pthread_join(death[i], NULL);
-	}
+	twenty_five_lines(data, thread, death, argc);
 	free(thread);
 	free(death);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -120,7 +116,8 @@ int	main(int argc, char **argv)
 	}
 	if (init_philo(data))
 		return (free_data(data, 1));
-	threads(data, argc);
+	if (threads(data, argc))
+		return (free_data(data, 1));
 	usleep(data->time_to_eat * 1000);
 	return (free_data(data, 0));
 }

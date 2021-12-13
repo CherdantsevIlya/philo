@@ -60,7 +60,9 @@ int	parsing(t_data *data, int argc, char **argv)
 		return (printf("Error: wrong time_to_sleep\n"));
 	if (argc == 6 && data->num_of_must_eat <= 0)
 		return (printf("Error: wrong num_of_must_eat\n"));
-	data->philo = NULL;
+	data->count_eat = 0;
+	data->death_flag = 0;
+	data->start_time = 0;
 	return (0);
 }
 
@@ -90,9 +92,7 @@ int	init_philo(t_data *data)
 	int	i;
 
 	i = 0;
-	data->count_eat = 0;
-	data->death_flag = 0;
-	data->start_time = 0;
+	data->philo = NULL;
 	data->philo = (t_philo *)malloc(sizeof(*(data->philo))
 			* data->num_of_philo);
 	if (!(data->philo))
@@ -101,6 +101,8 @@ int	init_philo(t_data *data)
 	{
 		data->philo[i].name = i;
 		data->philo[i].sem_name = ft_itoa(i + 1);
+		if (data->philo[i].sem_name == NULL)
+			return (printf("Error: failed to allocate memory\n"));
 		sem_unlink((const char *)data->philo[i].sem_name);
 		data->philo[i].death = sem_open((const char *)data->philo[i].sem_name,
 				O_CREAT, S_IRWXU, 1);

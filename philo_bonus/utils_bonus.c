@@ -24,12 +24,16 @@ void	free_data(t_data *data, int n)
 			sem_close(data->philo[i].death);
 			free(data->philo[i].sem_name);
 		}
+		free(data->philo);
 	}
-	free(data->philo);
 	sem_close(data->forks);
+	sem_unlink("/forks");
 	sem_close(data->death_flag);
+	sem_unlink("/death_flag");
 	sem_close(data->print);
+	sem_unlink("/print");
 	sem_close(data->count_eat);
+	sem_unlink("/count_eat");
 	free(data);
 	if (n == 1)
 		exit(1);
