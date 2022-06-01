@@ -93,7 +93,7 @@ ___
 ## 🍝 **The process of philosophers' life**
 
 <p align="center">
-    <img src="https://github.com/cherdantsevilya/philo/blob/main/content/philo.gif"
+    <img src="https://github.com/cherdantsevilya/philo/blob/main/content/philo.gif">
 </p>
 
 ___
