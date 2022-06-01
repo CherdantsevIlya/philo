@@ -1,5 +1,5 @@
 <h1 align="center">
-    P H I L O S O P H E R S
+    PHILOSOPHERS
 </h1>
 
 ___
