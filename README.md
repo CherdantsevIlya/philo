@@ -28,14 +28,14 @@ ___
   <img src="https://user-images.githubusercontent.com/40824677/137200907-21044ac4-00d4-4b10-a09e-bf01b4db15c1.png" />
 </p>
 
-### **Dining philosophers**
+### *Dining philosophers*
 
 In computer science, the dining philosophers problem is an example problem often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 It was originally formulated in 1965 by Edsger Dijkstra as a student exam exercise, presented in terms of computers competing for access to tape drive peripherals. Soon after, Tony Hoare gave the problem its present form.
 
 The dining philosopher's problem is the classical problem of synchronization which says that Five philosophers are sitting around a circular table and their job is to think, eat and sleep alternatively. A bowl of noodles is placed at the center of the table along with five forks for each of the philosophers. To eat a philosopher needs both their right and a left forks. A philosopher can only eat if both immediate left and right forks of the philosopher is available. In case if both immediate left and right forks of the philosopher are not available then the philosopher puts down their (either left or right) fork and starts thinking again.
 
-### **What you need to know?**
+### *What you need to know?*
 
 > - [X] Threads
 > - [X] Processes
@@ -43,7 +43,7 @@ The dining philosopher's problem is the classical problem of synchronization whi
 > - [X] Semaphore
 > - [X] Deadlock
 
-### **Rules**
+### *Rules*
 
 + One or more philosophers sit at a round table.
 There is a large bowl of spaghetti in the middle of the table.
@@ -62,7 +62,7 @@ a philosopher dies of starvation.
 + Philosophers don’t know if another philosopher is about to die.
 + No need to say that philosophers should avoid dying!
 
-### **Input parameters**
+### *Input parameters*
 
 ```c
  ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
@@ -75,7 +75,7 @@ of forks.
 - time_to_sleep (in milliseconds): The time a philosopher will spend sleeping.
 - number_of_times_each_philosopher_must_eat (optional argument): If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
 
-### **Output**
+### *Output*
 
 *Any state change of a philosopher must be formatted as follows:*
 
