@@ -4,22 +4,6 @@
 
 ___
 
-## :memo: **About**
-
-_In this project, you will learn the basics of threading a process. You will see how to create threads and you will discover mutexes._
-
-### *Keywords*  
-> + Unix logic
-
-### *Skills*
-> + Unix
-> + Imperative programming
-> + Rigor
-
-For detailed information, refer to the [**subject of this project**](https://github.com/cherdantsevilya/philo/blob/main/content/en.subject.pdf).
-
-___
-
 ## 🚀 **Description**
 
 *I’ve never thought philosophy would be so deadly 💀*
@@ -87,6 +71,8 @@ of forks.
 
 *Replace timestamp_in_ms with the current timestamp in milliseconds
 and X with the philosopher number.*
+
+###### *For detailed information, refer to the [**subject of this project**](https://github.com/cherdantsevilya/philo/blob/main/content/en.subject.pdf).*
 
 ___
 
